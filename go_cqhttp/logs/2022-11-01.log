@@ -1,0 +1,11 @@
+[2022-11-01 12:53:00] [WARNING]: 账号密码未配置, 将使用二维码登录. 
+[2022-11-01 12:53:00] [WARNING]: 将在 5秒 后继续. 
+[2022-11-01 12:53:05] [WARNING]: 虚拟设备信息不存在, 将自动生成随机设备. 
+[2022-11-01 12:53:28] [WARNING]: Protocol -> device lock is disable. http api may fail. 
+[2022-11-01 12:53:31] [WARNING]: 连接到反向WebSocket Universal服务器 ws://127.0.0.1:8080/onebot/v11/ws/ 时出现错误: dial tcp 127.0.0.1:8080: connectex: No connection could be made because the target machine actively refused it. 
+[2022-11-01 12:53:36] [WARNING]: 连接到反向WebSocket Universal服务器 ws://127.0.0.1:8080/onebot/v11/ws/ 时出现错误: dial tcp 127.0.0.1:8080: connectex: No connection could be made because the target machine actively refused it. 
+[2022-11-01 12:54:40] [WARNING]: Protocol -> device lock is disable. http api may fail. 
+[2022-11-01 13:45:01] [WARNING]: 监听反向WS Universal时出现错误: websocket: close 1006 (abnormal closure): unexpected EOF 
+[2022-11-01 14:29:35] [WARNING]: Protocol -> device lock is disable. http api may fail. 
+[2022-11-01 19:06:25] [WARNING]: Protocol -> device lock is disable. http api may fail. 
+[2022-11-01 19:20:20] [WARNING]: 监听反向WS Universal时出现错误: websocket: close 1006 (abnormal closure): unexpected EOF 

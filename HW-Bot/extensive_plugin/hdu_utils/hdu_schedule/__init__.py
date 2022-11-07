@@ -2,8 +2,6 @@ import asyncio
 import datetime
 import os
 import random
-
-
 import nonebot
 from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Bot, MessageEvent, Message, GroupMessageEvent
@@ -17,7 +15,8 @@ from services.log import logger
 from typing import Tuple
 from .._models import HDU_Sign_User
 from ..get_session import get_session
-
+import requests
+import ast
 
 driver: Driver = nonebot.get_driver()
 # 插件信息
@@ -85,9 +84,25 @@ async def _(bot: Bot, event: MessageEvent, cmd: Tuple[str, ...] = Command()):
                 today_courses.append(course)
     # 按照课程开始时间排序
     today_courses.sort(key=lambda x: x["startSection"])
+    todw,tomy = await get_tianqi()
+    timetab={
+        "1":"🕗",
+        "2":"🕘",
+        "3":"🕙",
+        "4":"🕚",
+        "5":"🕝",
+        "6":"🕞",
+        "7":"🕟",
+        "8":"🕠",
+        "9":"🕢",
+        "10":"🕣",
+        "11":"🕘",
+        "12":"🕤",
+    }
     for course in today_courses:
         res_msg += f"{course['courseName']}\n"
-        res_msg += f"时间：第{course['startSection']}-{course['endSection']}节\n"
+        res_msg += f"时间：{timetab['startSection']}-第{course['startSection']}-{course['endSection']}-{timetab['endSection']}节\n"
+        res_msg += f"天气：{todw} {todw} {todw}\n"
         res_msg += f"地点：{course['classRoom']}\n"
         res_msg += f"教师：{course['teacherName']}\n"
         res_msg += "----------------\n"
@@ -158,9 +173,25 @@ async def _():
                         today_courses.append(course)
             # 按照课程开始时间排序
             today_courses.sort(key=lambda x: x["startSection"])
+            todw,tomy = await get_tianqi()
+            timetab={
+                "1":"🕗",
+                "2":"🕘",
+                "3":"🕙",
+                "4":"🕚",
+                "5":"🕝",
+                "6":"🕞",
+                "7":"🕟",
+                "8":"🕠",
+                "9":"🕢",
+                "10":"🕣",
+                "11":"🕘",
+                "12":"🕤",
+            }
             for course in today_courses:
                 res_msg += f"{course['courseName']}\n"
-                res_msg += f"时间：第{course['startSection']}-{course['endSection']}节\n"
+                res_msg += f"时间：{timetab['startSection']}-第{course['startSection']}-{course['endSection']}-{timetab['endSection']}节\n"
+                res_msg += f"天气：{todw} {todw} {todw}\n"
                 res_msg += f"地点：{course['classRoom']}\n"
                 res_msg += f"教师：{course['teacherName']}\n"
                 res_msg += "----------------\n"
@@ -208,3 +239,28 @@ async def get_voice():
     result = record(voice, "chiya/course")
     msg = voice.split(".")[0]
     return result, msg
+
+async def get_tianqi():
+    city = "杭州"
+    key = '22776ba380fd44ef9e85113bc869dbef'
+    weapi="https://devapi.qweather.com/v7/weather/3d?"
+    idapi="https://geoapi.qweather.com/v2/city/lookup?"
+    city=await ast.literal_eval(requests.get(idapi+"key="+key+"&"+"location="+city).text)["location"][0]["id"]
+    wea=await ast.literal_eval(requests.get(weapi+"key="+key+"&"+"location="+city).text)
+    todaywea=await wea["daily"][0]["textDay"]
+    tomwea=await wea["daily"][1]["textDay"]
+    weathertab={
+        "雨":"🌧",
+        "雪":"❄",
+        "晴":"☀",
+        "云":"☁",
+        "阴":"⛅"
+    }
+    todw="🌧"
+    tomw="🌧"
+    for i in weathertab:
+        if i in todaywea:
+            todw=weathertab[i]
+        if i in tomwea:
+            tomw=weathertab[i]
+    return todw,tomw
